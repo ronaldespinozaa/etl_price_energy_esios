@@ -8,14 +8,14 @@ from datetime import datetime, timedelta
 import psycopg2
 from dotenv import load_dotenv
 import numpy as np
-load_dotenv()  # Carga las variables desde .env
+# load_dotenv()  # Carga las variables desde .env
 
-# Configurar las variables de conexión
-POSTGRES_USER = os.environ.get('POSTGRES_USER', 'airflow')
-POSTGRES_PASSWORD = os.environ.get('POSTGRES_PASSWORD', 'airflow')
-POSTGRES_DB = os.environ.get('POSTGRES_DB', 'airflow')
-POSTGRES_HOST = os.environ.get('POSTGRES_HOST', 'postgres')
-POSTGRES_PORT = os.environ.get('POSTGRES_PORT', '5432')
+# # Configurar las variables de conexión
+# POSTGRES_USER = os.environ.get('POSTGRES_USER', 'airflow')
+# POSTGRES_PASSWORD = os.environ.get('POSTGRES_PASSWORD', 'airflow')
+# POSTGRES_DB = os.environ.get('POSTGRES_DB', 'airflow')
+# POSTGRES_HOST = os.environ.get('POSTGRES_HOST', 'postgres')
+# POSTGRES_PORT = os.environ.get('POSTGRES_PORT', '5432')
 
 # Configuración de la página
 st.set_page_config(
@@ -32,16 +32,17 @@ st.title("⚡ Dashboard Ejecutivo - Precios de Energía")
 def get_db_connection():
     try:
         conn = psycopg2.connect(
-            host=POSTGRES_HOST,
-            database=POSTGRES_DB,
-            user=POSTGRES_USER,
-            password=POSTGRES_PASSWORD,
-            port=POSTGRES_PORT
+            host=st.secrets["POSTGRES_HOST"],
+            database=st.secrets["POSTGRES_DB"],
+            user=st.secrets["POSTGRES_USER"],
+            password=st.secrets["POSTGRES_PASSWORD"],
+            port=st.secrets["POSTGRES_PORT"]
         )
         return conn
     except Exception as e:
         st.error(f"No se pudo conectar a la base de datos: {e}")
         return None
+
 
 # Función para ejecutar consultas y obtener resultados como DataFrame
 @st.cache_data(ttl=3600)
