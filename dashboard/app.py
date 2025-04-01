@@ -31,12 +31,27 @@ st.title("⚡ Dashboard Ejecutivo - Precios de Energía")
 # Función para crear una conexión directa con psycopg2
 def get_db_connection():
     try:
+        # Intentar usar Streamlit Secrets
+        if "POSTGRES_HOST" in st.secrets:
+            host = st.secrets["POSTGRES_HOST"]
+            database = st.secrets["POSTGRES_DB"]
+            user = st.secrets["POSTGRES_USER"]
+            password = st.secrets["POSTGRES_PASSWORD"]
+            port = st.secrets["POSTGRES_PORT"]
+        else:
+            # Fallback a variables de entorno
+            host = os.environ.get('POSTGRES_HOST', 'postgres')
+            database = os.environ.get('POSTGRES_DB', 'airflow')
+            user = os.environ.get('POSTGRES_USER', 'airflow')
+            password = os.environ.get('POSTGRES_PASSWORD', 'airflow')
+            port = os.environ.get('POSTGRES_PORT', '5432')
+        
         conn = psycopg2.connect(
-            host=st.secrets["POSTGRES_HOST"],
-            database=st.secrets["POSTGRES_DB"],
-            user=st.secrets["POSTGRES_USER"],
-            password=st.secrets["POSTGRES_PASSWORD"],
-            port=st.secrets["POSTGRES_PORT"]
+            host=host,
+            database=database,
+            user=user,
+            password=password,
+            port=port
         )
         return conn
     except Exception as e:
