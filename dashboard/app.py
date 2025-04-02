@@ -30,7 +30,6 @@ st.title("⚡ Dashboard Ejecutivo - Precios de Energía")
 
 # Función para crear una conexión directa con psycopg2
 def get_db_connection():
-    """Crea una conexión a la base de datos PostgreSQL usando psycopg2."""
     try:
         conn = psycopg2.connect(
             host=POSTGRES_HOST,
