@@ -36,11 +36,11 @@ st.title("⚡ Dashboard Ejecutivo - Precios de Energía")
 def get_db_connection():
     try:
         conn = psycopg2.connect(
-            host=st.secrets["host"],
-            database=st.secrets["dbname"],
-            user=st.secrets["user"],
-            password=st.secrets["password"],
-            port=st.secrets["port"]
+            host=st.secrets.host,
+            database=st.secrets.dbname,
+            user=st.secrets.user,
+            password=st.secrets.password,
+            port=st.secrets.port
         )
         return conn
     except Exception as e:
