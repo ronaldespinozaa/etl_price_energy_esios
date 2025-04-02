@@ -8,6 +8,7 @@ from datetime import datetime, timedelta
 import psycopg2
 from dotenv import load_dotenv
 import numpy as np
+
 # load_dotenv()  # Carga las variables desde .env
 
 # # Configurar las variables de conexión
@@ -16,6 +17,8 @@ import numpy as np
 # POSTGRES_DB = os.environ.get('POSTGRES_DB', 'airflow')
 # POSTGRES_HOST = os.environ.get('POSTGRES_HOST', 'postgres')
 # POSTGRES_PORT = os.environ.get('POSTGRES_PORT', '5432')
+
+
 
 # Configuración de la página
 st.set_page_config(
@@ -33,11 +36,11 @@ st.title("⚡ Dashboard Ejecutivo - Precios de Energía")
 def get_db_connection():
     try:
         conn = psycopg2.connect(
-            host=st.secrets["POSTGRES_HOST"],
-            database=st.secrets["POSTGRES_DB"],
-            user=st.secrets["POSTGRES_USER"],
-            password=st.secrets["POSTGRES_PASSWORD"],
-            port=st.secrets["POSTGRES_PORT"]
+            host=st.secrets["host"],
+            database=st.secrets["dbname"],
+            user=st.secrets["user"],
+            password=st.secrets["password"],
+            port=st.secrets["port"]
         )
         return conn
     except Exception as e:
